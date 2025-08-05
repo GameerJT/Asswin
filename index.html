@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird - Login</title>
+    <link rel="stylesheet" href="style.css"> <!-- Your same CSS style applied here -->
+</head>
+
+<body>
+    <div class="container" id="auth-container">
+        <div id="login-form">
+            <h2>Login</h2>
+            <div class="form-group">
+                <input type="text" id="login-username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="login-password" placeholder="Password" required>
+            </div>
+            <button class="btn" onclick="login()">Login</button>
+            <div class="switch">
+                <a href="register.html">Don't have an account? Register</a>
+            </div>
+        </div>
+
+        <div class="modal" id="messageModal">
+            <div class="modal-content">
+                <h3 class="modal-title" id="modalTitle"></h3>
+                <p class="modal-message" id="modalMessage"></p>
+                <button class="modal-button" id="modalButton" onclick="closeModal()">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showModal(title, message) {
+            document.getElementById("modalTitle").textContent = title;
+            document.getElementById("modalMessage").textContent = message;
+            document.getElementById("messageModal").style.display = "flex";
+        }
+
+        function closeModal() {
+            document.getElementById("messageModal").style.display = "none";
+        }
+
+        function login() {
+            const username = document.getElementById("login-username").value.trim();
+            const password = document.getElementById("login-password").value.trim();
+
+            const users = JSON.parse(localStorage.getItem("flappy_users")) || {};
+
+            if (users[username] === password) {
+                localStorage.setItem("flappy_loggedin", username);
+                localStorage.setItem("currentUser", username); // again, store for later use
+                window.location.href = "game.html";
+            } else {
+                alert("Invalid username or password.");
+            }
+        }
+
+    </script>
+</body>
+
+</html>
